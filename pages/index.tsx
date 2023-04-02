@@ -4,17 +4,17 @@ import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Link from "next/link";
 import Date from "../components/date";
+import { GetStaticProps } from "next";
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
-  return {
-    props: {
-      allPostsData,
-    },
-  };
-}
-
-export default function Home({ allPostsData }) {
+export default function Home({
+  allPostsData,
+}: {
+  allPostsData: {
+    date: string;
+    title: string;
+    id: string;
+  }[];
+}) {
   return (
     <Layout home>
       <Head>
@@ -22,13 +22,11 @@ export default function Home({ allPostsData }) {
       </Head>
       <section className={utilStyles.headingMd}>
         <p>
-          Hello, I'm Yota. I'm an OTK. I love nogizaka46 and sakurazaka46. I
-          want to be a front-end engineer. I'm going to have a lot of money and
-          waste it for OTK activities. 😤😤
+          Hello, I'm Yota. I'm an OTK. I love nogizaka46 and sakurazaka46. I want to be a front-end
+          engineer. I'm going to have a lot of money and waste it for OTK activities. 😤😤
         </p>
         <p>
-          (This is a sample website - you'll be building a site like this on{" "}
-          {""}
+          (This is a sample website - you'll be building a site like this on {""}
           <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
         </p>
       </section>
@@ -51,3 +49,12 @@ export default function Home({ allPostsData }) {
     </Layout>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData = getSortedPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
+};
